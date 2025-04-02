@@ -55,3 +55,11 @@ P=0AD9 S=F7FA A=FF B=08 C=09 D=0E E=22 H=08 L=EF F=S----P-- OP=11 LXI D,0014
 Where `P` is the program counter, `S` is the stack pointer. The registers `A` to `L` followed by `F` which are the flags. Finally we have `OP` for the opcode and then the disassembled instruction.
 
 The flags are `S` for the Sign, `Z` for Zero, `H` for Half/Auxiliary Carry, `P` for Parity, `C` for Carry. Unset flags are represented with a `-` as are the bits that always are 0 or 1 in the flag register.
+
+## Patching the order of subtests
+
+Starting at location `013Ah` in the binary file is a table that points to the setup data for each subtest. So to run one of the smallest tests first simply replace the values `6Eh` `01h` of the first pointer locate at `013Ah` to instead point to the `ld (nnnn),hl`-test at `07CEh`. The table holds the LSB first so the new values should be `CEh` and `07h`. 
+
+The area that holds the pointers is highlighted in the screenshot below.
+
+![Patch Area](img/patcharea.png)
